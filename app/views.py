@@ -78,6 +78,7 @@ def result(request):
         df = df.drop(columns=['Product Image URL'])
         # i want to add Index column (First Column)
         df.insert(0, 'Index', range(1, 1 + len(df)))    
+
     sort_option = request.GET.get('sort')
 
     sorted_df = sort_dataframe(df, sort_option)
@@ -142,22 +143,19 @@ def view_csv(request, file_name):
         df['Image'] = df['Product Image URL'].apply(lambda url: f'<img src="{url}" alt="Product Image" style="max-width: 100px; max-height: 100px;">')
         df = df.drop(columns=['Product Image URL'])
 
+    sort_option = request.GET.get('sort')
+
+    sorted_df = sort_dataframe(df, sort_option)
+
+
     # Convert the DataFrame to an HTML table
-    table_html = df.to_html(classes='table table-striped', index=False, escape=False)
+    table_html = sorted_df.to_html(classes='table table-striped', index=False, escape=False)
 
     return render(request, 'view_csv.html', {
         'table_html': table_html,
         'file_name': file_name
     })
 
-
-
-
-
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-import os
-from django.conf import settings
 
 def rename_file(request):
     if request.method == 'POST':

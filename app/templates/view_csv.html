@@ -227,18 +227,6 @@
     <div class="main-container">
         <h1>CSV File: {{ file_name }}</h1>
 
-        <form method="GET" action="{% url 'view_csv' file_name %}" class="sort-form">
-            <select name="sort">
-                <option value="reset">Select sorting</option>
-                <option value="price_low_to_high">Price Low to High</option>
-                <option value="price_high_to_low">Price High to Low</option>
-                <option value="rating_high_to_low">Rating High to Low</option>
-                <option value="rating_low_to_high">Rating Low to High</option>
-            </select>
-            <button type="submit">Sort</button>
-            <button type="submit" name="reset" value="true">Reset Sorting</button>
-        </form>
-
         <!-- Display the DataFrame as an HTML table -->
         <div class="table-container">
             {{ table_html|safe }}
@@ -272,3 +260,9 @@
 </body>
 
 </html>
+
+
+
+<!-- add avarage price , discounted price and rating and all are some analysis buttons  -->
+<!-- add Graph to the top of this page for analysis  -->
+<!-- add a button to download the csv file  -->
