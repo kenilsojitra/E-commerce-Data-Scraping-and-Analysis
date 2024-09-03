@@ -9,10 +9,11 @@ from bs4 import BeautifulSoup
 import os
 
 def myntra_scraper(item_to_scrape, data_number, file_name):
-    data_number = int(data_number) * 3  # To ensure we get enough clean data
+    data_number = int(data_number) * 5  # To ensure we get enough clean data
     
     url = f"https://www.myntra.com/{item_to_scrape}"
-    service = Service(executable_path="D:\\projects python django\\scraper\\home\\chromedriver.exe")
+    service = Service(executable_path=r"D:\projects python django\vkd\app\halper\chromedriver.exe")
+    
     driver = webdriver.Chrome(service=service)
     
     product_title = []
@@ -27,12 +28,6 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
     # Load existing data if the CSV file already exists
     output_directory = "csv_folder"
     output_path = os.path.join(output_directory, file_name + ".csv")
-    if os.path.exists(output_path):
-        existing_data = pd.read_csv(output_path)
-        # Convert to list of dictionaries for easy appending
-        existing_data_dict = existing_data.to_dict(orient='records')
-    else:
-        existing_data_dict = []
 
     while len(product_title) < data_number:
         page_num = 1  # Start from page 1 for each new scraping run
@@ -109,8 +104,16 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
                         product_url.append("No URL found")
                 except:
                     product_url.append("No URL found")
+            
+            print(f"Scraped {len(product_title)} products from page {page_num}. Total scraped: {len(product_title)}")
+            if len(product_title) >= data_number:
+                break
 
-            # Create DataFrame from collected data
+            page_num += 1
+
+        if len(product_title) >= data_number:
+            
+
             df = pd.DataFrame({
                 "Product Title": product_title,
                 "Product MRP": product_mrp,
@@ -121,7 +124,7 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
                 "Rating Count": product_rating_count,
             })
 
-            # Clean data: remove rows where any of the important columns have "No * found"
+                # Clean data: remove rows where any of the important columns have "No * found"
             df_cleaned = df[
                 (df['Product Title'] != 'No title found') & 
                 (df['Product MRP'] != 'No MRP found') & 
@@ -131,43 +134,14 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
                 (df['Product Image URL'] != 'No image found') & 
                 (df['Product URL'] != 'No URL found')
             ]
+            print(f"Scraped {len(df_cleaned)} clean products.")
 
             # Remove duplicate rows
             df_cleaned = df_cleaned.drop_duplicates()
 
-            # Append new cleaned data to existing data
-            combined_data = existing_data_dict + df_cleaned.to_dict(orient='records')
-            df_combined = pd.DataFrame(combined_data)
-
-            df_combined = df_combined.drop_duplicates()
-            # Print progress
-            print(f"Scraped {len(combined_data)} clean products from page {page_num}. Total scraped: {len(product_title)}")
-
-            if len(df_combined) >= data_number:
-                break
-
-            page_num += 1
-
-        if len(df_combined) >= data_number:
-            break
+            df_cleaned.to_csv(output_path , index=False)
         
-        # If not enough data, retry by navigating to the next item or resetting the product lists
-        print(f"Insufficient clean data ({len(combined_data)} products) for item '{item_to_scrape}'. Retrieving more data...")
-    
-    # Save combined data to CSV
-    if len(product_title) >= data_number:
-        df_sorted = df_combined.sort_values(by=['Discounted Price', 'Product Rating'], ascending=[True, False])
-        
-        if not os.path.exists(output_directory):
-            os.makedirs(output_directory)
-        
-        df_sorted.to_csv(output_path, index=False)
-        print(f"Saved {len(df_sorted)} products' clean data to CSV file.")
-    else:
-        print(f"Could only scrape {len(df_cleaned)} clean products, which is less than the required {data_number}. Scraping more to meet the requirement.")
-        # Optionally, save incomplete data
-        df_combined.to_csv(os.path.join(output_directory, file_name + "_incomplete.csv"), index=False)
-
+         
     driver.quit()
     print("Scraping completed")
 

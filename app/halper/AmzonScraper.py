@@ -12,14 +12,16 @@ import os
 
 def amazon_scraper(item_to_scrape, data_number, file_name):
     try:
-        data_number = int(data_number) * 3 # To ensure we get enough clean data
+        data_number = int(data_number) * 4  # To ensure we get enough clean data
     except ValueError:
         print("Error: data_number must be an integer.")
         return
 
     url = "https://www.amazon.com/"
     
-    service = Service(executable_path="D:\\projects python django\\scraper\\home\\chromedriver.exe")
+    service = Service(executable_path=r"D:\projects python django\vkd\app\halper\chromedriver.exe")
+
+    
     driver = webdriver.Chrome(service=service)
     driver.get(url)
 
@@ -132,11 +134,10 @@ def amazon_scraper(item_to_scrape, data_number, file_name):
                 break
 
             page_num += 1
-
+        
         if len(product_title) >= data_number:
             break
         
-        print(f"Insufficient clean data ({len(product_title)}) for item '{item_to_scrape}'. Retrieving more data...")
 
     if len(product_title) > 0:
         output_directory = "csv_folder"
@@ -163,10 +164,8 @@ def amazon_scraper(item_to_scrape, data_number, file_name):
             (df['Product URL'] != 'No URL found')
         ]
 
-        df_sorted = df_cleaned.sort_values(by=['Discounted Price', 'Product Rating'], ascending=[True, False])
 
-        df_sorted.to_csv(os.path.join(output_directory, file_name + ".csv"), index=False)
-        print(f"Saved {len(df_sorted)} products' clean data to CSV file.")
+        df_cleaned.to_csv(os.path.join(output_directory, file_name + ".csv"), index=False)
     else:
         print("No products scraped")
 
