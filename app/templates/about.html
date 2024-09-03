@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* For Webkit browsers (Chrome, Safari) */
+        ::-webkit-scrollbar {
+            display: none;
+            /* Hides the scrollbar */
+        }
+
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #00aaff, #00ffaa);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #000;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        /* About Container */
+        .about-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            padding: 40px;
+            max-width: 1100px;
+        }
+
+        .about-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #282c34;
+            text-align: center;
+        }
+
+        .about-container p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: center;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #00ffaa, #00aaff);
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* Founder Section */
+        .founders {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .founder-card {
+            background: whitesmoke;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 250px;
+            transition: transform 0.3s;
+        }
+
+        .founder-card:hover {
+            transform: scale(1.05);
+        }
+
+        .founder-card img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .founder-card h5 {
+            font-size: 1.25rem;
+            color: #282c34;
+        }
+
+        .founder-card p {
+            font-size: 0.875rem;
+            color: #666;
+            background: ;
+        }
+
+        .main-founder-card {
+            background: whitesmoke;
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .main-founder-card img {
+            border-radius: 15px;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .main-founder-card h5 {
+            font-size: 1.75rem;
+        }
+
+        .main-founder-card p {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .founders {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .founder-card {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">ScraperApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'result' %}">Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'history' %}">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'about' %}">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="about-container">
+        <h1>About Us</h1>
+        <p>Welcome to ScraperApp! Our mission is to provide you with the best tools to extract and analyze data from
+            various sources effortlessly.</p>
+        <p>Our team of dedicated professionals is committed to continuously improving our platform to meet your needs
+            and exceed your expectations.</p>
+        <p class="highlight">Thank you for choosing ScraperApp. We are here to help you with all your data scraping
+            needs!</p>
+    </div>
+
+    <!-- Our Founders -->
+    <div class="about-container founders">
+        <div class="founder-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWXRRVyQ7rGBN9vYjvP_KOYAB_mFhMt6Qd2g&s"
+                alt="Founder 1">
+            <h5>Founder 1</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus fermentum felis.</p>
+        </div>
+        <div class="founder-card main-founder-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ82kp56X6dqohqVP1_KWNP8urYCUjMUjTQkQ&s"
+                alt="Main Founder">
+            <h5>Main Founder</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus fermentum felis.</p>
+        </div>
+        <div class="founder-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy6euqkuPPPZuAdDot4OBFwmgb_BTuEVSl6Q&s"
+                alt="Founder 2">
+            <h5>Founder 2</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus fermentum felis.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 ScraperApp. All rights reserved.
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
