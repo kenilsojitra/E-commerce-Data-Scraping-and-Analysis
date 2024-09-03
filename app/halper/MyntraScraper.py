@@ -19,7 +19,7 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
     product_mrp = []
     product_discounted_price = []
     product_img = []
-    product = []
+    product = [] 
     product_url = []
     product_rating = []
     product_rating_count = []
