@@ -1,0 +1,192 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.navbar {
+    background: linear-gradient(135deg, #00aaff, #00ffaa);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand-container {
+    margin-right: 30px;
+}
+
+.navbar-nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.main-container {
+    max-width: 1100px;
+    width: auto;
+    margin: auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #007bff;
+}
+
+.scroll-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.scroll-buttons button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.scroll-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.scroll-buttons button:focus {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .scroll-buttons {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .scroll-buttons button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-buttons {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .scroll-buttons button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+.sort-form {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.sort-form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    max-width: 300px;
+}
+
+.sort-form button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sort-form button:hover {
+    background-color: #0056b3;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.table-container th {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Analysis Section Styling */
+.analysis-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.analysis-section h2 {
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.analysis-section .btn-info {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Download Button Styling */
+.download-csv {
+    margin-bottom: 20px;
+    text-align: right;
+}

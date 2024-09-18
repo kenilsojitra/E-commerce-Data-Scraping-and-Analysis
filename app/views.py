@@ -12,9 +12,8 @@ from django.http import Http404
 import json
 import time
 from django.contrib import messages
-from app.utils import sort_dataframe  # Import the function if it's in utils.py
+from app.utils import *  # Import the function if it's in utils.py
 
- 
 CSV_DIR_PATH = os.path.join(settings.BASE_DIR, '/csv_folder')
 
 def home(request):
@@ -83,11 +82,8 @@ def result(request):
 
     sorted_df = sort_dataframe(df, sort_option)
 
-
     # Convert the DataFrame to an HTML table
     table_html = sorted_df.to_html(classes='table table-striped', index=False, escape=False)
-
-    
 
     # Render the 'result.html' template with the table_html and latest_file context
     return render(request, 'result.html', {
@@ -126,10 +122,11 @@ def history(request):
         'csv_files': csv_files
     })
 
-def view_csv(request, file_name):
 
+
+def view_csv(request, file_name):
     csv_folder = 'csv_folder'
-    csv_path = os.path.join(settings.BASE_DIR, csv_folder, file_name)  # Corrected path
+    csv_path = os.path.join(settings.BASE_DIR, csv_folder, file_name)
 
     # Check if the file exists
     if not os.path.isfile(csv_path):
@@ -143,17 +140,57 @@ def view_csv(request, file_name):
         df['Image'] = df['Product Image URL'].apply(lambda url: f'<img src="{url}" alt="Product Image" style="max-width: 100px; max-height: 100px;">')
         df = df.drop(columns=['Product Image URL'])
 
-    sort_option = request.GET.get('sort')
+    # Initialize averages
+    avg_price = None
+    avg_discounted_price = None
+    avg_rating = None
 
-    sorted_df = sort_dataframe(df, sort_option)
+    # Calculate average price if 'Product MRP' column exists
+    if 'Product MRP' in df.columns:
+        df['Product MRP'] = df['Product MRP'].astype(str)  # Ensure all values are strings
 
+        # Extract currency and clean price
+        df['Currency'] = df['Product MRP'].str.extract(r'([INR$Rs.]+)')
+        df['Product MRP'] = df['Product MRP'].replace({'INR': '', '\$': '', 'Rs.': '', '\xa0': '', ',': ''}, regex=True)
+        df['Product MRP'] = pd.to_numeric(df['Product MRP'], errors='coerce')  # Convert to numeric, with errors handled
+
+        avg_price = df['Product MRP'].mean()
+
+        # Format price with currency symbols and proper formatting
+        df['Product MRP'] = df['Currency'].fillna('') + ' ' + df['Product MRP'].apply(lambda x: '{:,.2f}'.format(x))
+        df = df.drop(columns=['Currency'])
+
+    # Calculate average discounted price if 'Discounted Price' column exists
+    if 'Discounted Price' in df.columns:
+        df['Discounted Price'] = df['Discounted Price'].astype(str)  # Ensure all values are strings
+
+        # Extract currency and clean discounted price
+        df['Currency'] = df['Discounted Price'].str.extract(r'([INR$Rs.]+)')
+        df['Discounted Price'] = df['Discounted Price'].replace({'INR': '', '\$': '', 'Rs.': '', '\xa0': '', ',': ''}, regex=True)
+        df['Discounted Price'] = pd.to_numeric(df['Discounted Price'], errors='coerce')  # Convert to numeric, with errors handled
+
+        avg_discounted_price = df['Discounted Price'].mean()
+
+        # Format price with currency symbols and proper formatting
+        df['Discounted Price'] = df['Currency'].fillna('') + ' ' + df['Discounted Price'].apply(lambda x: '{:,.2f}'.format(x))
+        df = df.drop(columns=['Currency'])
+
+    # Calculate average rating if 'Product Rating' column exists
+    if 'Product Rating' in df.columns:
+        df['Product Rating'] = pd.to_numeric(df['Product Rating'], errors='coerce')  # Convert to numeric, with errors handled
+        avg_rating = df['Product Rating'].mean()
 
     # Convert the DataFrame to an HTML table
-    table_html = sorted_df.to_html(classes='table table-striped', index=False, escape=False)
+    table_html = df.to_html(classes='table table-striped', index=False, escape=False)
 
+
+    # Render the template with the table and averages
     return render(request, 'view_csv.html', {
         'table_html': table_html,
-        'file_name': file_name
+        'file_name': file_name,
+        'avg_price': avg_price,
+        'avg_discounted_price': avg_discounted_price,
+        'avg_rating': avg_rating,
     })
 
 
@@ -192,5 +229,23 @@ def delete_file(request):
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
 
-   
-   
+
+def get_chart_data(request, file_name):
+    try:
+        # Example: Prepare the chart data dynamically from the CSV file
+        csv_folder = 'csv_folder'
+        csv_path = os.path.join(settings.BASE_DIR, csv_folder, file_name)
+        df = pd.read_csv(csv_path)
+
+        # For simplicity, let's assume 'Product Name' and 'Product MRP' columns exist
+        chart_data = {
+            'labels': df['Product MRP'].tolist(),  # X-axis labels
+            'values': df['Product Rating'].tolist()  # Y-axis values (e.g., prices)
+        }
+
+        # Return chart data as a JSON response
+        return JsonResponse({'chart_data': json.dumps(chart_data)})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    
+

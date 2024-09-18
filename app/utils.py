@@ -1,5 +1,10 @@
 import pandas as pd
+import pandas as pd
 
+
+
+
+# Function for sorting in result page 
 def sort_dataframe(df, sort_option, price_column='Discounted Price', rating_column='Product Rating'):
     if sort_option == 'reset':
         if "Unnamed: 0" in df.columns:
