@@ -7,9 +7,9 @@
 
 <div class="container mainbox">
     <div class="fade_in">
-        <h2>Lorem ipsum dolor sit.</h2>
-        <h2>consectetur elit.</h2>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, veniam!</p>
+        <h2>Scrape smarter, rise faster </h2>
+        <h2>than competitors.</h2>
+        <p>Data at your fingertips, scrape efficiently, and outpace your competition.</p>
         <a href="#scraper_box"><button class="box_btn" type="button">Learn More</button></a>
     </div>
 </div>
@@ -39,15 +39,45 @@
         <input type="submit" value="Start Scraping">
     </form>
 
-    <!-- Loading indicator -->
-    <div id="loading-indicator" class="loading-indicator">
-        <p>Loading... Please wait.</p>
-        <div class="spinner"></div>
+
+</div>
+
+<!-- Real-time scraped data list -->
+<div id="scraped-data-section">
+    <div class="main-container">
+        <h1>Scraped Products</h1>
+
+        <form method="GET" action="{% url 'result' %}" class="sort-form">
+            <select name="sort">
+                <option value="reset">Select sorting</option>
+                <option value="price_low_to_high">Price Low to High</option>
+                <option value="price_high_to_low">Price High to Low</option>
+                <option value="rating_high_to_low">Rating High to Low</option>
+                <option value="rating_low_to_high">Rating Low to High</option>
+            </select>
+            <button type="submit">Sort</button>
+            <button type="submit" name="reset" value="true">Reset Sorting</button>
+        </form>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <div class="table-wrapper">
+                {{ table_html|safe }}
+            </div>
+        </div>
+
+        <!-- Scroll buttons -->
+        <div class="scroll-buttons">
+            <button class="scroll-top" onclick="window.scrollTo(0, 0)">Scroll to Top</button>
+            <button class="scroll-bottom" onclick="window.scrollTo(0, document.body.scrollHeight)">Scroll to
+                Bottom</button>
+        </div>
     </div>
 </div>
 
+
 <!-- Custom Centered Pop-up -->
-<!-- <div id="overlay" class="overlay">
+<div id="overlay" class="overlay">
     <div id="customPopup" class="custom-popup">
         <button class="popup-close" onclick="closePopup()">×</button>
         <h5>Login</h5>
@@ -62,13 +92,28 @@
             <input type="submit" value="Login">
         </form>
     </div>
-</div> -->
+</div>
 
-<!-- Overlay -->
+<script>
+    function fetchRealTimeData() {
+        fetch("{% url 'result' %}")
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                    return;
+                }
+                document.querySelector('.table-wrapper').innerHTML = data.table_html;
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
+    // Fetch real-time data every 30 seconds
+    setInterval(fetchRealTimeData, 30000);
 
-<!-- {% include 'footer.html' %} -->
-
+    // Initial fetch when page loads
+    fetchRealTimeData();
+</script>
 
 <script>
     // Show the loading indicator when scraping starts

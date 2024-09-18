@@ -86,11 +86,10 @@ def result(request):
     table_html = sorted_df.to_html(classes='table table-striped', index=False, escape=False)
 
     # Render the 'result.html' template with the table_html and latest_file context
-    return render(request, 'result.html', {
+    return render(request, 'home.html', {
         'table_html': table_html,
         'file_name': latest_file  
     })
-
 
 
 def download_csv(request, filename):
@@ -248,4 +247,3 @@ def get_chart_data(request, file_name):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
     
-

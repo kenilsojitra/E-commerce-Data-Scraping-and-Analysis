@@ -145,5 +145,3 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
     driver.quit()
     print("Scraping completed")
 
-# Example usage
-# myntra_scraper("men-shirts", 400, "scraped_data")
