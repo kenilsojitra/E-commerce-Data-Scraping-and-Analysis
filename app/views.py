@@ -86,7 +86,7 @@ def result(request):
     table_html = sorted_df.to_html(classes='table table-striped', index=False, escape=False)
 
     # Render the 'result.html' template with the table_html and latest_file context
-    return render(request, 'home.html', {
+    return render(request, 'result.html', {
         'table_html': table_html,
         'file_name': latest_file  
     })

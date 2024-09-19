@@ -14,9 +14,24 @@ body {
   display: none;
 }
 .mainbox {
-  padding: 120px 0px 200px 50px;
+  /* position: absolute; */
+  /* background-image: url(/app/images/homebg.webp); */
+}
+.bgimg img {
+  position: relative;
+  object-fit: cover;
+  top: -450px;
+
+  /* animation: zoom-out 2s ease-in-out; */
+}
+.bgimg img:active {
+  transform: scale(2);
+  transition: transform 0.2s ease;
 }
 .fade_in {
+  position: absolute;
+  top: 200px;
+  padding: 0px 0px 200px 100px;
   color: white;
   animation: fade-right 3s ease-in-out;
 }
