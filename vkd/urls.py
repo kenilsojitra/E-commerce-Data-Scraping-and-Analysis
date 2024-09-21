@@ -4,6 +4,7 @@ from app import views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path, include
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -15,5 +16,7 @@ urlpatterns = [
     path('view_csv/<str:file_name>/', views.view_csv, name='view_csv'),
     path('rename/', views.rename_file, name='rename_file'),
     path('delete/', views.delete_file, name='delete_file'),
-    path('get_chart_data/<str:file_name>/', views.get_chart_data, name='get_chart_data'),
+    path('analysis/', views.analysis, name='analysis'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block start %}
+
+{% include 'navbar.html' %}
+
+<h1>Analysis</h1>
+<!-- add step for analysis -->
+
+<div class="main-content"></div>
+<h2>Upload a CSV file</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+<h2>Analysis Results</h2>
+<p>Upload a CSV file to see the analysis results.</p>
+</div>
+
+
+<div class="main-content">
+    <h1>History of Files</h1>
+    <div class="search-bar mb-3 position-relative">
+        <input type="text" id="searchInput" class="form-control ps-5" placeholder="Search for files...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <ul id="fileList">
+        {% for file in page_obj %}
+        <li>
+            <span class="index-number">{{ forloop.counter0|add:page_obj.start_index }}. </span>
+            <a href="{% url 'view_csv' file %}">{{ file }}</a>
+        </li>
+        {% empty %}
+        <p class="no-files-message">No files found.</p>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <!-- Hidden data for search -->
+    <script>
+        const allFiles = {{ csv_files| safe }};
+    </script>
+</div>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the file list element
+        const fileList = document.getElementById('fileList');
+        const searchInput = document.getElementById('searchInput');
+
+        // Search Functionality
+        searchInput.addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            fileList.innerHTML = '';  // Clear current display
+
+            // Filter all files (from the hidden JavaScript object)
+            const filteredFiles = allFiles.filter(file => file.toLowerCase().includes(filter));
+
+            // Update the list with filtered results
+            filteredFiles.forEach((file, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="index-number">${index + 1}. </span><a href="/view_csv/${file}">${file}</a>`;
+                fileList.appendChild(li);
+            });
+
+            if (filteredFiles.length === 0) {
+                fileList.innerHTML = '<p class="no-files-message">No files found.</p>';
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

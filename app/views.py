@@ -52,6 +52,9 @@ def contact(request):
 def about(request):
     return render(request, 'about.html')
 
+def analysis(request):
+    return render(request, 'analysis.html')
+
 def result(request):
     csv_folder = 'csv_folder'
     
@@ -117,9 +120,33 @@ def history(request):
     # Get a list of all CSV files in the directory
     csv_files = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
 
-    return render(request, 'history.html', {
+    return render(request, 'history.html' ,{
         'csv_files': csv_files
     })
+
+from django.core.paginator import Paginator
+def analysis(request):
+
+    csv_folder = 'csv_folder'
+    csv_path = os.path.join(os.getcwd(), csv_folder)
+
+    # Check if the directory exists
+    if not os.path.isdir(csv_path):
+        raise Http404("Directory not found.")
+
+    # Get a list of all CSV files in the directory
+    csv_files = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
+    
+    # Pagination: only 10 files per page
+    paginator = Paginator(csv_files, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,     # For pagination display
+        'csv_files': csv_files,   # All files for search
+    }
+    return render(request, 'analysis.html', context)
 
 
 
@@ -246,4 +273,6 @@ def get_chart_data(request, file_name):
         return JsonResponse({'chart_data': json.dumps(chart_data)})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-    
+
+
+
