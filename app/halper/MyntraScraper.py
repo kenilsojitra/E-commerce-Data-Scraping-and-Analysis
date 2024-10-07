@@ -12,7 +12,7 @@ def myntra_scraper(item_to_scrape, data_number, file_name):
     data_number = int(data_number) * 5  # To ensure we get enough clean data
     
     url = f"https://www.myntra.com/{item_to_scrape}"
-    service = Service(executable_path=r"D:\projects python django\vkd\app\halper\chromedriver.exe")
+    service = Service(executable_path=r"D:\collage project\vkd\app\halper\chromedriver.exe")
     
     driver = webdriver.Chrome(service=service)
     
