@@ -534,3 +534,86 @@ th::after {
 .modal-footer .btn {
   border-radius: 4px;
 }
+
+/* analysis page  */
+.container {
+  color: whitesmoke;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.step:hover {
+  background-color: rgb(30, 30, 30);
+  border: 2px solid white; /* Add a white border */
+  color: white;
+  transition: 10ms;
+  -ms-zoom-animation: inherit;
+}
+
+.step {
+  color: white;
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: rgb(26, 26, 26);
+}
+
+.step-icon {
+  font-size: 2em;
+  color: #007bff;
+}
+
+.step-title {
+  margin-top: 10px;
+  font-size: 1.5em;
+}
+
+.step-description {
+  margin-top: 10px;
+  font-size: 1em;
+  color: whitesmoke;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2em;
+}
+
+.main-content {
+  margin-top: 40px;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .btn {
+  margin: 0 5px;
+}

@@ -17,6 +17,8 @@ urlpatterns = [
     path('rename/', views.rename_file, name='rename_file'),
     path('delete/', views.delete_file, name='delete_file'),
     path('analysis/', views.analysis, name='analysis'),
+    path('upload_csv/', views.upload_csv, name='upload_csv'), 
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

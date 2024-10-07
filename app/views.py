@@ -148,6 +148,32 @@ def analysis(request):
     }
     return render(request, 'analysis.html', context)
 
+from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
+import os
+
+def upload_csv(request):
+    csv_data = None
+
+    if request.method == 'POST' and request.FILES['csv_file']:
+        csv_file = request.FILES['csv_file']
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'This is not a CSV file.')
+            return redirect('upload_csv')
+
+        fs = FileSystemStorage()
+        filename = fs.save(csv_file.name, csv_file)
+
+        # Read the CSV file using pandas
+        try:
+            csv_data = pd.read_csv(fs.url(filename)).to_dict(orient='records')  # Convert to list of dicts
+            messages.success(request, f'File {csv_file.name} uploaded successfully.')
+        except Exception as e:
+            messages.error(request, f'Error reading CSV file: {e}')
+            return redirect('upload_csv')
+
+    return render(request, 'analysis.html', {'csv_data': csv_data})
 
 
 def view_csv(request, file_name):
