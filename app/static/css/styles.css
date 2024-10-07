@@ -24,10 +24,10 @@ body {
 
   /* animation: zoom-out 2s ease-in-out; */
 }
-.bgimg img:active {
+/* .bgimg img:active {
   transform: scale(2);
   transition: transform 0.2s ease;
-}
+} */
 .fade_in {
   position: absolute;
   top: 200px;
