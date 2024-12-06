@@ -1,33 +1,69 @@
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: #141416;
   margin: 0;
   padding: 0;
   /* overflow: hidden; */
   position: relative;
 }
 .main_body {
-  background-color: rgb(24, 24, 24);
+  background-color: #141416;
 }
 /* For Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
   display: none;
 }
-.mainbox {
-  /* position: absolute; */
-  /* background-image: url(/app/images/homebg.webp); */
-}
-.bgimg img {
+
+/* .bgimg img {
   position: relative;
   object-fit: cover;
   top: -450px;
-
-  /* animation: zoom-out 2s ease-in-out; */
-}
+  height: 100hv;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+} */
+/* animation: zoom-out 2s ease-in-out; */
 /* .bgimg img:active {
   transform: scale(2);
   transition: transform 0.2s ease;
 } */
+
+.image {
+  position: relative;
+  height: 200vh;
+  width: 100%;
+  top: -200px;
+  margin: auto;
+  background-image: url(../../images/homebg.webp);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  scale: 1;
+}
+.slideImg {
+  position: relative;
+  height: 140vh;
+  width: 100%;
+  top: -1045px;
+  margin: auto;
+  background-image: url(../../images/bgimg.jpg);
+  background-position: center center;
+  background-size: cover;
+  /* background-repeat: no-repeat; */
+  overflow: hidden;
+  /* animation: fade-left 3s ease-in-out; */
+}
+@keyframes fade-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
+}
 .fade_in {
   position: absolute;
   top: 200px;
@@ -69,16 +105,29 @@ body {
   color: white;
 }
 
-.main-container {
-  max-width: 800px;
-  margin: auto;
+.mainContainer {
+  width: 950px;
+  top: -600px;
+  position: relative;
   padding: 20px;
-  /* background: #ffffff; */
+  /* background: rgb(24, 24, 24);  */
+  background: linear-gradient(135deg, #181818, #7281b8cf);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
   margin-bottom: 40px;
+  color: white;
+  z-index: 997;
 }
-
+.mainContainer h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+  font-weight: 600;
+}
+.scrapBox {
+  display: flex;
+  justify-content: center;
+}
 .custom-popup {
   position: fixed;
   top: 50%;
@@ -116,7 +165,8 @@ select {
 }
 
 input[type="submit"] {
-  background: linear-gradient(135deg, #00ffaa, #00aaff);
+  /* background: linear-gradient(135deg, #00ffaa, #00aaff); */
+  background-color: #ff0000db;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: none;
   padding: 10px;
@@ -255,17 +305,10 @@ input[type="submit"]:hover {
   max-width: 1000px;
   margin: auto;
   padding: 20px;
-  background: #ffffff;
+  background: linear-gradient(135deg, #181818, #7281b8cf);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
   margin-bottom: 40px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #06111e;
-  font-weight: 600;
 }
 
 .button-container {
@@ -294,7 +337,8 @@ h1 {
 
 .table-container {
   margin-top: 20px;
-  overflow-y: auto;
+  overflow-y: scroll;
+  border-radius: 15px;
 }
 
 table {
@@ -376,6 +420,7 @@ th::after {
 
 /* CSS for sorting dropdown */
 .sort-form {
+  display: flex;
   margin: 20px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -391,18 +436,12 @@ th::after {
   background-color: #fff;
   color: #333;
   width: 100%;
-  max-width: 300px;
+  /* max-width: 300px; */
 }
 
 .sort-form button {
-  margin-top: 10px;
-  padding: 8px 15px;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
   font-size: 16px;
+  margin-top: -1px;
 }
 
 .sort-form button:hover {
@@ -416,9 +455,9 @@ th::after {
   max-width: 800px;
   margin: auto;
   padding: 20px;
-  background: #ffffff;
+  background: linear-gradient(135deg, #181818, #7281b8cf);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(13, 109, 253, 0.982);
   margin-bottom: 40px;
 }
 
@@ -463,7 +502,6 @@ th::after {
 
 .rename-button,
 .delete-button {
-  background-color: #007bff;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -473,12 +511,19 @@ th::after {
   margin-left: 10px;
   transition: background-color 0.3s;
 }
-
-.rename-button:hover,
-.delete-button:hover {
-  background-color: #0056b3;
+.rename-button {
+  background-color: #007bff;
+}
+.delete-button {
+  background-color: #dc3545;
 }
 
+.rename-button:hover {
+  background-color: #0056b3;
+}
+.delete-button:hover {
+  background-color: #d63d4d;
+}
 .no-files-message {
   text-align: center;
   font-size: 1.2rem;
@@ -535,85 +580,135 @@ th::after {
   border-radius: 4px;
 }
 
-/* analysis page  */
-.container {
-  color: whitesmoke;
+/* styles.css */
+.footer {
+  background-color: #25252a;
+  color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 14px;
+  width: 100%;
+  /* position: fixed; */
+  bottom: 0;
+  left: 0;
 }
 
-.steps {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+.footer p {
+  margin: 0;
 }
 
-.step:hover {
-  background-color: rgb(30, 30, 30);
-  border: 2px solid white; /* Add a white border */
-  color: white;
-  transition: 10ms;
-  -ms-zoom-animation: inherit;
+.footer a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 18px;
 }
 
-.step {
-  color: white;
-  flex: 1;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  margin: 10px;
-  background-color: rgb(26, 26, 26);
+.footer a:hover {
+  color: #f0ad4e; /* Change color on hover for a nice effect */
 }
 
-.step-icon {
-  font-size: 2em;
+/* Profile CSS
+/* Profile Styles */
+.profile-container {
+  background-color: #25252a;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 60%;
+  max-width: 600px;
+  margin: 50px auto;
+  text-align: center;
+  color: #ffffff;
+}
+
+.profile-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
   color: #007bff;
 }
 
-.step-title {
-  margin-top: 10px;
-  font-size: 1.5em;
+.profile-container h2 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #e9ecef;
 }
 
-.step-description {
-  margin-top: 10px;
-  font-size: 1em;
-  color: whitesmoke;
-}
-
-.btn-primary {
+.logout-button {
+  display: inline-block;
   margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1.2em;
+  padding: 12px 20px;
+  background-color: #ff0000db;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+*/ .logout-button:hover {
+  background-color: #d63d4d;
 }
 
-.main-content {
-  margin-top: 40px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    width: 90%;
+  }
+
+  .profile-container h1 {
+    font-size: 2rem;
+  }
+
+  .profile-container h2 {
+    font-size: 1.2rem;
+  }
 }
 
-.search-bar {
-  position: relative;
+/* About CSS */
+/* About Page Styles */
+.about-container {
+  width: 800px; /* Restrict width for better readability */
+  height: 410px;
+  margin: 40px auto; /* Center the container with spacing */
+  padding: 20px; /* Add padding for spacing */
+  background-color: rgba(
+    20,
+    20,
+    20,
+    0.8
+  ); /* Semi-transparent background for depth */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for elevation */
+  color: #e9ecef; /* Text color for contrast */
 }
 
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  color: #aaa;
+.about-container h1 {
+  text-align: center; /* Center align the heading */
+  margin-bottom: 20px; /* Space below heading */
+  font-size: 2.5rem; /* Font size for the main title */
+  color: #007bff; /* Color to match your theme */
 }
 
-.list-group-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.about-container p {
+  line-height: 1.6; /* Improved line height for readability */
+  margin-bottom: 15px; /* Space below each paragraph */
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+.highlight {
+  font-weight: bold; /* Emphasize highlighted text */
+  color: #f0ad4e; /* Different color for emphasis */
 }
 
-.pagination .btn {
-  margin: 0 5px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+
+  .about-container h1 {
+    font-size: 2rem; /* Slightly smaller heading */
+  }
+
+  .about-container p {
+    font-size: 1rem; /* Adjust font size for paragraphs */
+  }
 }

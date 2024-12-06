@@ -110,8 +110,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Make sure the directory path is correct
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect the user to this URL after login
+LOGIN_REDIRECT_URL = '/'
+
+# Redirect to this URL if the user is not logged in and tries to access a restricted page
+LOGIN_URL = 'login'

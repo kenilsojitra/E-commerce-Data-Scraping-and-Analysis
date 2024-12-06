@@ -15,22 +15,24 @@
 
     <!-- Analysis Section -->
     <div class="analysis-section">
-        <h2>Analysis</h2>
-        {% if avg_price %}
-        <button class="btn btn-info">Average Price: ₹{{ avg_price|floatformat:2 }}</button>
-        {% else %}
-        <button class="btn btn-info">Average Price: Data not available</button>
-        {% endif %}
-        {% if discounted_price %}
-        <button class="btn btn-info">Discounted Price: ₹{{ discounted_price|floatformat:2 }}</button>
-        {% else %}
-        <button class="btn btn-info">Discounted Price: Data not available</button>
-        {% endif %}
-        {% if avg_rating %}
-        <button class="btn btn-info">Average Rating: {{ avg_rating|floatformat:1 }}</button>
-        {% else %}
-        <button class="btn btn-info">Average Rating: Data not available</button>
-        {% endif %}
+        <h2 style="color: white;">Analysis</h2>
+        <div class="listBox" style="margin-bottom: 10px;">
+            {% if avg_price %}
+            <button class="btn btn-info">Average Price: ₹{{ avg_price|floatformat:2 }}</button>
+            {% else %}
+            <button class="btn btn-info">Average Price: Data not available</button>
+            {% endif %}
+            {% if discounted_price %}
+            <button class="btn btn-info">Discounted Price: ₹{{ discounted_price|floatformat:2 }}</button>
+            {% else %}
+            <button class="btn btn-info">Discounted Price: Data not available</button>
+            {% endif %}
+            {% if avg_rating %}
+            <button class="btn btn-info">Average Rating: {{ avg_rating|floatformat:1 }}</button>
+            {% else %}
+            <button class="btn btn-info">Average Rating: Data not available</button>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Button to open the modal -->

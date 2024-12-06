@@ -253,8 +253,8 @@ def rename_file(request):
         file_extension = request.POST.get('file_extension')
 
         # Get the full path of the old and new file names
-        old_file_path = os.path.join(settings.MEDIA_ROOT, old_name)
-        new_file_path = os.path.join(settings.MEDIA_ROOT, new_name + file_extension)
+        old_file_path = os.path("csv_folder", old_name)
+        new_file_path = os.path("CSV_folder", new_name + file_extension)
 
         # Rename the file if the old file exists
         if os.path.exists(old_file_path):
@@ -267,10 +267,7 @@ def rename_file(request):
 
 def delete_file(request):
     if request.method == 'POST':
-        file_name = request.POST.get('file_name')
-
-        # Get the full path of the file to delete
-        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+        file_path = request.POST.get('csv_folder')  # Accept the file path directly from the POST request
 
         # Delete the file if it exists
         if os.path.exists(file_path):
@@ -302,3 +299,61 @@ def get_chart_data(request, file_name):
 
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render,HttpResponse,redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate, login as auth_login
+
+
+def register(request):
+    if request.method=='POST':
+        uname=request.POST.get('username')
+        email=request.POST.get('email')
+        pass1=request.POST.get('password1')
+        pass2=request.POST.get('password2')
+
+        if pass1!=pass2:
+            return HttpResponse("Your password and confrom password are not Same!!")
+        else:
+            my_user=User.objects.create_user(uname,email,pass1)
+            my_user.save()
+            return redirect('login')
+    else:
+        return render (request,'register.html')
+    
+
+
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from app.models import CSVFile
+
+@login_required
+def file_history(request):
+    # Assuming you have a model named CSVFile with a ForeignKey to User
+    csv_files = CSVFile.objects.filter(user=request.user)
+    return render(request, 'file_history.html', {'csv_files': csv_files})
+
+def login(request):  # Renamed the view function to avoid conflict
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        pass1 = request.POST.get('pass')
+        user = authenticate(request, username=username, password=pass1)
+        
+        if user is not None:
+            auth_login(request, user)  # Using Django's built-in login function
+            return redirect('home')  # Redirect to 'history' after successful login
+        else:
+            return HttpResponse("Username or Password is incorrect!!!")
+
+    return render(request, 'login.html')
+
+def LogoutPage(request):
+    logout(request)
+    return render(request ,'home.html')
+
+def profile_view(request):
+    return render(request, 'profile.html') 

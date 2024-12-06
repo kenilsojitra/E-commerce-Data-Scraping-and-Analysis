@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block start%}
 {% include 'navbar.html' %}
+
+{% if user.is_authenticated %}
 <div class="main-container">
     <h1>Product Data</h1>
 
@@ -19,13 +21,17 @@
             <option value="rating_high_to_low">Rating High to Low</option>
             <option value="rating_low_to_high">Rating Low to High</option>
         </select>
-        <button type="submit">Sort</button>
-        <button type="submit" name="reset" value="true">Reset Sorting</button>
+        <button type="submit"
+            style="padding: 10px 24px; background-color: #1f80e0;  color: #fff; border-radius: 5px; cursor: pointer;  margin-right: 10px; "
+            , title="Sort Products "><i class="fas fa-sort"></i></button>
+        <button type="submit" value="reset"
+            style="padding: 10px 20px; background-color: #e53935;  color: #fff; border-radius: 5px; cursor: pointer; " ,
+            title="Reset Products "><i class="fas fa-sync-alt"></i></button>
     </form>
 
     <!-- Table Container -->
     <div class="table-container">
-        <div class="table-wrapper">
+        <div class="table-wrapper table-striped table-dark">
             {{ table_html|safe }}
         </div>
     </div>
@@ -37,6 +43,10 @@
             Bottom</button>
     </div>
 </div>
+
+{% else %}
+<p>You are not logged in. Please <a href="{% url 'login' %}">login</a> to view the results.</p>
+{% endif %}
 
 
 

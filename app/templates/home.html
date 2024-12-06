@@ -2,64 +2,54 @@
 {% block start%}
 
 <!-- Navigation Bar -->
-
 {% include 'navbar.html' %}
 
 <div class=" mainbox">
-    <div class="bgimg"><img src="/app/images/homebg.webp" alt="" srcset="" style="width: -webkit-fill-available;"></div>
+    <div class="bgimg image" id="image"></div>
     <div class="container fade_in">
         <h2>Scrape smarter, rise faster </h2>
         <h2>than competitors.</h2>
-        <p>Data at your fingertips, scrape efficiently, and outpace your competition.</p>
+        <p>Data at your fingertips, scrape efficiently, and outspace your competition.</p>
         <a href="#scraper_box"><button class="box_btn" type="button">Learn More</button></a>
     </div>
 </div>
-<div class="main-container" id="scraper_box">
-    <h1>Amazon Scraper</h1>
+{% if user.is_authenticated %}
+<div class="scrapBox" style="display: flex; justify-content: center;">
+    <div class="mainContainer" id="scraper_box">
+        <h1>Scraper</h1>
 
-    <form method="post" action="/">
-        {% csrf_token %}
-        <label for="item-to-scrape">Item to Scrape:</label>
-        <input type="text" id="item-to-scrape" name="item-to-scrape" required>
-
-        <label for="data-amount">Number of Items to Scrape:</label>
-        <input type="number" id="data-amount" name="data-amount" required>
-
-        <label for="website-selector">Select Website:</label>
-        <select id="website-selector" name="website-selector" required>
-            <option value="">Select Platform</option>
-            <option value="Amazon">Amazon</option>
-            <option value="Flipkart">Flipkart</option>
-            <option value="Myntra">Myntra</option>
-            <option value="Meshow">Meshow</option>
-        </select>
-
-        <label for="your-file-name">Your File Name </label>
-        <input type="text" id="your-file-name" name="your-file-name" required>
-
-        <input type="submit" value="Start Scraping">
-    </form>
-
-
-</div>
-
-<!-- Custom Centered Pop-up -->
-<div id="overlay" class="overlay">
-    <div id="customPopup" class="custom-popup">
-        <button class="popup-close" onclick="closePopup()">×</button>
-        <h5>Login</h5>
-        <form method="post" action="/login/">
+        <form method="post" action="/">
             {% csrf_token %}
-            <input type="text" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <div class="popup-actions">
-                <a href="#">Sign Up</a>
-                <a href="#">Forgot Password?</a>
-            </div>
-            <input type="submit" value="Login">
+            <label for="
+            -to-scrape">Item to Scrape:</label>
+            <input type="text" id="item-to-scrape" name="item-to-scrape" required>
+
+            <label for="data-amount">Number of Items to Scrape:</label>
+            <input type="number" id="data-amount" name="data-amount" required>
+
+            <label for="website-selector">Select Website:</label>
+            <select id="website-selector" name="website-selector" required>
+                <option value="">Select Platform</option>
+                <option value="Amazon">Amazon</option>
+                <option value="Myntra">Myntra</option>
+            </select>
+
+            <label for="your-file-name">Your File Name </label>
+            <input type="text" id="your-file-name" name="your-file-name" required>
+
+            <input type="submit" value="Start Scraping">
         </form>
+
+
     </div>
 </div>
+<div class="slideImg"></div>
+<!-- create box for comments  -->
+
+{% else %}
+
+{% endif %}
+
 
 <script>
     function fetchRealTimeData() {
@@ -88,22 +78,27 @@
         document.getElementById('loading-indicator').classList.add('show');
     });
 
-    // Show custom popup and overlay after 5 seconds
-    window.onload = function () {
-        setTimeout(function () {
-            document.getElementById('customPopup').classList.add('show');
-            document.getElementById('overlay').classList.add('show');
-            document.body.style.overflow = 'hidden'; // Prevent page scroll
-        }, 5000);
-    };
 
-    // Function to close the popup and hide overlay
-    function closePopup() {
-        document.getElementById('customPopup').classList.remove('show');
-        document.getElementById('overlay').classList.remove('show');
-        document.body.style.overflow = ''; // Restore page scroll
-    }
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+
+    // GSAP animation to scale up the image on scroll
+    gsap.to(".slideImg", {
+        transform: translateX(-10), // Scale image up to 1.5 times its size
+        scrollTrigger: {
+            trigger: ".slideImg", // The element that triggers the animation
+            start: "top 70%",      // When the top of the container reaches 80% of the viewport height
+            end: "top 10%",        // When the top of the container reaches 20% of the viewport height
+            scrub: true,           // Smooth animation linked to the scroll position
+            markers: true          // For debugging, you can remove this later
+        }
+    });
+</script>
 
 {% endblock %}

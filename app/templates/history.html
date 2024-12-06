@@ -3,8 +3,11 @@
 <!-- Navigation Bar -->
 {% include 'navbar.html' %}
 
+
+{% if user.is_authenticated %}
+
 <div class="main-content">
-    <h1>History of Files</h1>
+    <h1>CSV Files </h1>
     <div class="search-bar mb-3 position-relative">
         <input type="text" id="searchInput" class="form-control ps-5" placeholder="Search for files...">
         <i class="fas fa-search search-icon"></i>
@@ -24,6 +27,11 @@
         {% endfor %}
     </ul>
 </div>
+{% else %}
+
+{% endif %}
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
