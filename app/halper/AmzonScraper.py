@@ -165,7 +165,7 @@ def amazon_scraper(item_to_scrape, data_number, file_name):
         ]
 
 
-        df_cleaned.to_csv(os.path.join(output_directory, file_name + ".csv"), index=False)
+        df_cleaned.to_csv(os.path.join(output_directory, file_name + ".csv"), index=True)
     else:
         print("No products scraped")
 

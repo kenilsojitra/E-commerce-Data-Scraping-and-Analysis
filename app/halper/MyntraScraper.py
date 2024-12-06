@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 import os
 
 def myntra_scraper(item_to_scrape, data_number, file_name):
-    data_number = int(data_number) * 5  # To ensure we get enough clean data
+    data_number = int(data_number) * 5 
     
     url = f"https://www.myntra.com/{item_to_scrape}"
     service = Service(executable_path=r"app\halper\chromedriver.exe")
